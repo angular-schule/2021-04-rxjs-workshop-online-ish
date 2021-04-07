@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of, from, timer, interval, ReplaySubject } from 'rxjs';
+import { Observable, of, from, timer, interval, ReplaySubject, Subscriber } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
 @Component({
@@ -23,7 +23,51 @@ export class CreatingComponent implements OnInit {
 
     /******************************/
 
+
+    function producer(obs: Subscriber<number>) {
+      obs.next(1);
+      obs.next(2);
+
+      setTimeout(() => obs.next(3), 2000);
+      setTimeout(() => obs.complete(), 4000);
+      setTimeout(() => obs.next(5), 5000);
+    }
+
+    const obs = {
+      next: e => console.log(e),
+      error: e => console.error(e),
+      complete: () => console.log('C')
+    };
+
     
+    // Argument für Observable(): Funktion mit Argument
+      // Argument: Objekt
+      // Objekt: 3 Methoden (N, E, C)
+    const myObs$ = new Observable(producer);
+    
+    // producer(obs);
+    
+    // myObs$.subscribe(obs);
+    // myObs$.subscribe(e => this.log(e));
+
+    /*myObs$.subscribe({
+      complete: () => console.log('PARTIAL OBSERVER')
+    });*/
+
+    
+    /*const myPromise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve('HALLO');
+      }, 2000)
+    });
+    
+    from(myPromise).subscribe((e: string) => this.log(e));*/
+    
+    timer(0, 1000).pipe(
+      map(x => x * 3),
+      filter(x => x % 2 === 0)
+    ).subscribe(e => this.log(e));
+
     /******************************/
   }
 
