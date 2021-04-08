@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { timer, Observable } from 'rxjs';
-import { tap, scan } from 'rxjs/operators';
+import { timer, Observable, of } from 'rxjs';
+import { tap, scan, first, take } from 'rxjs/operators';
 
 @Component({
   selector: 'rxw-fromevent',
@@ -9,7 +9,6 @@ import { tap, scan } from 'rxjs/operators';
 })
 export class AsyncpipeComponent implements OnInit {
 
-  result: number;
   result$: Observable<number>;
 
   ngOnInit() {
@@ -20,13 +19,18 @@ export class AsyncpipeComponent implements OnInit {
 
     /**************!!**************/
 
-     timer(0, 700).pipe(                        
+     this.result$ = timer(0, 700).pipe(                        
       scan((acc, item) => acc + item, 0),
       tap({
         next: e => console.log(e),
         complete: () => console.log('✅ COMPLETE')
       }),
-     ).subscribe(e => this.result = e);         
+     );        
+
+    /*of(100,200).pipe(first()).subscribe({
+      next: console.log,
+      complete: () => console.log('CCCCC')
+    })*/
 
     /**************!!**************/
   }
