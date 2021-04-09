@@ -1,0 +1,10 @@
+<div class="text-center">
+
+  <button class="btn btn-primary mr-2" (click)="increment()">Increment</button>
+  <button class="btn btn-primary mr-2" (click)="decrement()">Decrement</button>
+  <button class="btn btn-primary mr-2" (click)="reset()">Reset</button>
+
+  <div class="counter">
+    {{ counter$ | async }}
+  </div>
+</div>
