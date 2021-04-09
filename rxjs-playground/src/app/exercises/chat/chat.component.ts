@@ -36,11 +36,11 @@ export class ChatComponent implements OnInit {
 
     /**************!!**************/
 
-     zip(
+     combineLatest([
         this.msg.julia$,
         this.msg.georg$,
         this.msg.john$
-     ).subscribe({                                   
+     ]).subscribe({                                   
       next: e => this.log(e),
       error: err => this.log('❌ ERROR: ' + err),
       complete: () => this.log('✅ All members left')

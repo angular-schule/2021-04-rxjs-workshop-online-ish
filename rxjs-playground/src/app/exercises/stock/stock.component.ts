@@ -44,7 +44,18 @@ export class StockComponent {
 
     /******************************/
 
-    this.purchases$ = EMPTY;
+
+    this.purchases$ = this.buyAction$.pipe(
+      withLatestFrom(this.goldRate$), // [source, goldRate]
+      map(([amount, rate]) => {
+        return {
+          amount,
+          date: Date.now(),
+          rate,
+          total: rate * amount
+        }
+      })
+    );
     
     /******************************/
 

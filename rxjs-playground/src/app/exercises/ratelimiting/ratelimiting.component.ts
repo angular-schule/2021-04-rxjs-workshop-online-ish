@@ -31,6 +31,7 @@ export class RatelimitingComponent implements OnInit {
     /**************!!**************/
 
     this.result$ = this.events$.pipe(
+      throttleTime(1000)
     );
 
     /**************!!**************/

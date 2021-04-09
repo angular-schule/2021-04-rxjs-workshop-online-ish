@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject, ReplaySubject, Observable, of } from 'rxjs';
-import { mergeMap, concatMap, switchMap, exhaustMap, map, mergeAll } from 'rxjs/operators';
+import { Subject, ReplaySubject, Observable, of, timer } from 'rxjs';
+import { mergeMap, concatMap, switchMap, exhaustMap, map, mergeAll, mapTo } from 'rxjs/operators';
 
 import { ExerciseService } from '../exercise.service';
 
@@ -30,7 +30,7 @@ export class HigherorderComponent implements OnInit {
     /**************!!**************/
 
     this.result$ = this.source$.pipe(
-      mergeMap(tier => this.es.echo(tier)),
+      exhaustMap(tier => this.es.echo(tier)),
     );
 
     /**************!!**************/

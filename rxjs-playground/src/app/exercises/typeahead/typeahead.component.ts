@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TypeaheadService } from './typeahead.service';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
 import { Book } from './book';
 
 @Component({
@@ -12,14 +12,15 @@ import { Book } from './book';
 export class TypeaheadComponent implements OnInit {
 
   searchControl: FormControl;
-  results: Book[];
+
   loading = false;
+  result$: Observable<Book[]>;
 
   constructor(private ts: TypeaheadService) { }
 
   ngOnInit() {
     this.searchControl = new FormControl('');
-    const searchInput$ = this.searchControl.valueChanges;
+    const searchInput$: Observable<string> = this.searchControl.valueChanges;
 
     /**
      * Baue eine TypeAhead-Suche, die während der Eingabe eine Suche gegen unsere Buch-API ausführt.
@@ -34,6 +35,14 @@ export class TypeaheadComponent implements OnInit {
 
     /******************************/
 
+    this.result$ = searchInput$.pipe(
+      debounceTime(400),
+      distinctUntilChanged(),
+      filter(term => term.length >= 3 || term.length === 0),
+      tap(() => this.loading = true),
+      switchMap(term => this.ts.search(term)),
+      tap(() => this.loading = false),
+    );
     
     /******************************/
   }

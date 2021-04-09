@@ -25,7 +25,7 @@ export class ErrorHandlingComponent {
 
   start() {
     this.es.randomError().pipe(
-      // retry(5),
+      // retry(5), // retryWhen()
       catchError(err => {
         console.log('FEHLER!!', err);
         return throwError('EIN FEHLER'); // weiterwerfen

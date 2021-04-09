@@ -26,6 +26,7 @@ export class MulticastComponent implements OnInit {
         shareReplay(5)
       );
 
+      // this.measureValues$ = new Subject();
       /*this.measureValues$ = new ReplaySubject(5);
       this.mvs.getValues().subscribe(this.measureValues$);*/
 
