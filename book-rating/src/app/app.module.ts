@@ -23,7 +23,12 @@ import { EffectsModule } from '@ngrx/effects';
     HttpClientModule,
     BooksModule,
     CounterModule,
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot({}, {
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionTypeUniqueness: true
+      }
+    }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     EffectsModule.forRoot([])
   ],

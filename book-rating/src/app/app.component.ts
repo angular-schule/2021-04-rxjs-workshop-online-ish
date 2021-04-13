@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { increment } from './counter/store/counter.actions';
 
 @Component({
   selector: 'br-root',
@@ -7,4 +9,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Book Rating';
+
+  constructor(private store: Store) {
+    setTimeout(() => {
+      this.store.dispatch(increment());
+    }, 3000);
+  }
 }

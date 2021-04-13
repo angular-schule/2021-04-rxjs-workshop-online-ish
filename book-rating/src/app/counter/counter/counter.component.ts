@@ -1,28 +1,32 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { map } from 'rxjs/operators';
 
-import { StateService } from '../state.service';
+import { decrement, increment, reset } from '../store/counter.actions';
+import { selectCounter } from '../store/counter.selectors';
 
 @Component({
   selector: 'br-counter',
   templateUrl: './counter.component.html',
-  styleUrls: ['./counter.component.scss']
+  styleUrls: ['./counter.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CounterComponent {
 
-  counter$ = this.service.state$;
+  counter$ = this.store.pipe(select(selectCounter));
 
-  constructor(private service: StateService) { }
+  constructor(private store: Store) {}
 
   increment() {
-    this.service.dispatch(1);
+    this.store.dispatch(increment());
   }
 
   decrement() {
-    this.service.dispatch(-1);
+    this.store.dispatch(decrement());
   }
 
   reset() {
-    // TODO
+    this.store.dispatch(reset());
   }
 
 }
