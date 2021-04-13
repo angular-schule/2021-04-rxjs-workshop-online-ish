@@ -3,7 +3,7 @@
   Bücher werden geladen...</div>
 </div>
 
-<ng-container *ngIf="books">
+<ng-container *ngIf="books$ | async as books">
   <span class="badge badge-success mb-3">Es sind {{ books.length }} Bücher vorhanden.</span>
 
   <br-book

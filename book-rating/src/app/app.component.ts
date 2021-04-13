@@ -11,8 +11,6 @@ export class AppComponent {
   title = 'Book Rating';
 
   constructor(private store: Store) {
-    setTimeout(() => {
-      this.store.dispatch(increment());
-    }, 3000);
+   
   }
 }

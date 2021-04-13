@@ -9,6 +9,10 @@ import { RepeatDirective } from './shared/repeat.directive';
 import { CreateBookComponent } from './create-book/create-book.component';
 import { BookDetailsComponent } from './book-details/book-details.component';
 import { BookFormComponent } from './book-form/book-form.component';
+import { StoreModule } from '@ngrx/store';
+import * as fromBook from './store/book.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { BookEffects } from './store/book.effects';
 
 @NgModule({
   declarations: [
@@ -22,7 +26,9 @@ import { BookFormComponent } from './book-form/book-form.component';
   imports: [
     CommonModule,
     BooksRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    StoreModule.forFeature(fromBook.bookFeatureKey, fromBook.reducer),
+    EffectsModule.forFeature([BookEffects])
   ],
   exports: [
     DashboardComponent
