@@ -1,13 +1,15 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import * as fromBook from './book.reducer';
 
+const { selectAll } = fromBook.bookAdapter.getSelectors();
+
 export const selectBookState = createFeatureSelector<fromBook.State>(
   fromBook.bookFeatureKey
 );
 
 export const selectAllBooks = createSelector(
   selectBookState,
-  state => state.books
+  selectAll
 );
 
 export const selectBooksLoading = createSelector(

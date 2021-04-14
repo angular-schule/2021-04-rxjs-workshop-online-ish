@@ -30,3 +30,14 @@ export const createBookFailure = createAction(
   props<{ error: any }>()
 );
 
+export const rateUp = createAction(
+  '[Book] Rate Up',
+  props<{ book: Book }>()
+);
+
+export const rateDown = createAction(
+  '[Book] Rate Down',
+  props<{ book: Book }>()
+);
+
+

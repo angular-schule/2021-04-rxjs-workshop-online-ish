@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 
 import { Book } from '../shared/book';
 import { BookStoreService } from '../shared/book-store.service';
-import { loadBooks } from '../store/book.actions';
+import { loadBooks, rateDown, rateUp } from '../store/book.actions';
 import { selectAllBooks, selectBooksLoading } from '../store/book.selectors';
 
 @Component({
@@ -24,10 +24,12 @@ export class DashboardComponent implements OnInit {
   }
 
   rateUp(book: Book) {
-    // const ratedBook = { ...book, rating: Math.min(5, book.rating + 1) };
+    this.store.dispatch(rateUp({ book }));
+    // const ratedBook = { ...book, rating:  };
   }
-
+  
   rateDown(book: Book) {
+    this.store.dispatch(rateDown({ book }));
     // const ratedBook = { ...book, rating: Math.max(1, book.rating - 1) };
   }
 
