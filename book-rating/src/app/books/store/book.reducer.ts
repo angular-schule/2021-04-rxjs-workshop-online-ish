@@ -76,7 +76,11 @@ export const reducer = createReducer(
 
   on(BookActions.selectBook, (state, action) => {
     return { ...state, selectedIsbn: action.isbn };
-  })
+  }),
+
+  on(BookActions.loadBookSuccess, (state, action) => {
+    return bookAdapter.setOne(action.data, state);
+  }),
 
 );
 

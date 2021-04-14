@@ -18,7 +18,20 @@ export class BookEffects {
       map(data => BookActions.loadBooksSuccess({ data })),
       catchError(error => of(BookActions.loadBooksFailure({ error })))
       )),
-      ));
+    ));
+
+  loadBook$ = createEffect(() => this.actions$.pipe(
+    ofType(BookActions.loadBook),
+    concatMap(({ isbn }) => this.bs.getSingle(isbn).pipe(
+      map(data => BookActions.loadBookSuccess({ data })),
+      catchError(error => of(BookActions.loadBookFailure({ error })))
+      )),
+    ));
+
+  loadBookAfterSelect$ = createEffect(() => this.actions$.pipe(
+    ofType(BookActions.selectBook),
+    map(({ isbn }) => BookActions.loadBook({ isbn }))
+  ));
 
   createBook$ = createEffect(() => this.actions$.pipe(
     ofType(BookActions.createBook),
