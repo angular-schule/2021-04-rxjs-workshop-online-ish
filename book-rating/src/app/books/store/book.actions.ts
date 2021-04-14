@@ -14,3 +14,19 @@ export const loadBooksFailure = createAction(
   '[Book] Load Books Failure',
   props<{ error: any }>()
 );
+
+export const createBook = createAction(
+  '[Book] Create Book',
+  props<{ book: Book }>()
+);
+
+export const createBookSuccess = createAction(
+  '[Book] Create Book Success',
+  props<{ book: Book }>()
+);
+
+export const createBookFailure = createAction(
+  '[Book] Create Book Failure',
+  props<{ error: any }>()
+);
+

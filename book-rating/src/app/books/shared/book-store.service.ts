@@ -22,7 +22,7 @@ export class BookStoreService {
   }
 
   create(book: Book) {
-    return this.http.post(`${this.apiUrl}/books`, book, { responseType: 'text' });
+    return this.http.post<Book>(`${this.apiUrl}/books`, book);
   }
 
   delete(isbn: string) {

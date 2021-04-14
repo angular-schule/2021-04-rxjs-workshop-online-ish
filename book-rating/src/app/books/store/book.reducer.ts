@@ -11,7 +11,7 @@ export interface State {
 
 export const initialState: State = {
   books: [],
-  loading: false
+  loading: false,
 };
 
 
@@ -39,6 +39,15 @@ export const reducer = createReducer(
       loading: false
     };
   }),
+
+  on(BookActions.createBookSuccess, (state, action) => {
+    /*const books = Array.from(state.books);
+    books.push(action.book);*/
+    return {
+      ...state,
+      books: [...state.books, action.book]
+    };
+  })
 
 );
 
