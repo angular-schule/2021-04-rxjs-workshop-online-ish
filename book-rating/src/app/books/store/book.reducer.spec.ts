@@ -1,4 +1,5 @@
-import { reducer, initialState } from './book.reducer';
+import { loadBooks } from './book.actions';
+import { reducer, initialState, State } from './book.reducer';
 
 describe('Book Reducer', () => {
   describe('an unknown action', () => {
@@ -8,6 +9,14 @@ describe('Book Reducer', () => {
       const result = reducer(initialState, action);
 
       expect(result).toBe(initialState);
+    });
+
+    it('should set loading to true for loadBooks', () => {
+      const action = loadBooks();
+      const state: State = { ...initialState, loading: false };
+
+      const result = reducer(state, action);
+      expect(result.loading).toBe(true);
     });
   });
 });

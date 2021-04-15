@@ -1,5 +1,5 @@
 import * as fromBook from './book.reducer';
-import { selectBookState } from './book.selectors';
+import { selectBooksLoading, selectBookState } from './book.selectors';
 
 describe('Book Selectors', () => {
   it('should select the feature state', () => {
@@ -9,4 +9,13 @@ describe('Book Selectors', () => {
 
     expect(result).toEqual({});
   });
+
+  it('should select the loading flag', () => {
+    const state = {
+      [fromBook.bookFeatureKey]: { loading: true }
+    };
+
+    const result = selectBooksLoading(state);
+    expect(result).toBe(true);
+  })
 });

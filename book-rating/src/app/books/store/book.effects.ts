@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, concatMap, tap, switchMap } from 'rxjs/operators';
+import { catchError, map, concatMap, tap, switchMap, withLatestFrom, take, filter } from 'rxjs/operators';
 import { EMPTY, from, of } from 'rxjs';
 
 import * as BookActions from './book.actions';
 import { BookStoreService } from '../shared/book-store.service';
 import { Router } from '@angular/router';
+import { routerNavigatedAction, ROUTER_NAVIGATED } from '@ngrx/router-store';
+import { selectSelectedIsbn } from './book.selectors';
+import { select, Store } from '@ngrx/store';
 
 
 
@@ -28,11 +31,6 @@ export class BookEffects {
       )),
     ));
 
-  loadBookAfterSelect$ = createEffect(() => this.actions$.pipe(
-    ofType(BookActions.selectBook),
-    map(({ isbn }) => BookActions.loadBook({ isbn }))
-  ));
-
   createBook$ = createEffect(() => this.actions$.pipe(
     ofType(BookActions.createBook),
     concatMap(action => this.bs.create(action.book).pipe(
@@ -46,6 +44,14 @@ export class BookEffects {
     switchMap(action => from(this.router.navigate(['/books', action.book.isbn])))
   ), { dispatch: false });
 
-  constructor(private actions$: Actions, private bs: BookStoreService, private router: Router) {}
+  loadBookAfterNavigation$ = createEffect(() => this.actions$.pipe(
+    ofType(routerNavigatedAction),
+    // withLatestFrom(this.store.pipe(selectSelectedIsbn)),
+    switchMap(() => this.store.pipe(select(selectSelectedIsbn), take(1))),
+    filter(isbn => !!isbn),
+    map(isbn => BookActions.loadBook({ isbn }))
+  ));
+
+  constructor(private actions$: Actions, private bs: BookStoreService, private router: Router, private store: Store) {}
 
 }

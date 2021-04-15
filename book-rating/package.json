@@ -21,13 +21,14 @@
     "@angular/platform-browser-dynamic": "~11.2.8",
     "@angular/router": "~11.2.8",
     "@ngrx/effects": "^11.1.0",
+    "@ngrx/entity": "^11.1.0",
+    "@ngrx/router-store": "^11.1.0",
     "@ngrx/store": "^11.1.0",
     "@ngrx/store-devtools": "^11.1.0",
     "rxjs": "^6.5.4",
     "tslib": "^2.0.0",
     "webpack-bundle-analyzer": "^3.6.0",
-    "zone.js": "~0.10.2",
-    "@ngrx/entity": "^11.1.0"
+    "zone.js": "~0.10.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1102.7",

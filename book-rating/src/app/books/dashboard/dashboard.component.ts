@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 import { Book } from '../shared/book';
 import { BookStoreService } from '../shared/book-store.service';
 import { loadBooks, rateDown, rateUp } from '../store/book.actions';
-import { selectAllBooks, selectBooksLoading } from '../store/book.selectors';
+import { selectAllBooks, selectBookByISBNFactory, selectBookByISBNProps, selectBooksLoading } from '../store/book.selectors';
 
 @Component({
   selector: 'br-dashboard',
@@ -13,6 +13,9 @@ import { selectAllBooks, selectBooksLoading } from '../store/book.selectors';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+
+  // angularBook$ = this.store.pipe(select(selectBookByISBNFactory('9783864907791')));
+  angularBook$ = this.store.pipe(select(selectBookByISBNProps, { isbn: '9783864907791' }));
 
   books$ = this.store.pipe(select(selectAllBooks));
   loading$ = this.store.pipe(select(selectBooksLoading));

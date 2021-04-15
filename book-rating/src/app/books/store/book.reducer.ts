@@ -7,7 +7,6 @@ export const bookFeatureKey = 'book';
 
 export interface State extends EntityState<Book> {
   loading: boolean;
-  selectedIsbn: string;
 }
 
 export const bookAdapter = createEntityAdapter<Book>({
@@ -16,7 +15,6 @@ export const bookAdapter = createEntityAdapter<Book>({
 
 export const initialState: State = bookAdapter.getInitialState({
   loading: false,
-  selectedIsbn: null
 });
 
 
@@ -72,10 +70,6 @@ export const reducer = createReducer(
         rating: Math.max(1, action.book.rating - 1)
       }
     }, state);
-  }),
-
-  on(BookActions.selectBook, (state, action) => {
-    return { ...state, selectedIsbn: action.isbn };
   }),
 
   on(BookActions.loadBookSuccess, (state, action) => {

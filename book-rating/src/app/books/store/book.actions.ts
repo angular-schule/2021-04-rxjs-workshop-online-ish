@@ -54,9 +54,3 @@ export const rateDown = createAction(
   '[Book] Rate Down',
   props<{ book: Book }>()
 );
-
-export const selectBook = createAction(
-  '[Book] Select Book',
-  props<{ isbn: string }>()
-);
-
